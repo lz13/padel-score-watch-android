@@ -27,3 +27,6 @@ app/.cxx/
 
 # Log files
 *.log
+
+# AI tools
+.ai/
