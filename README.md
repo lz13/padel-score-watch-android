@@ -44,6 +44,16 @@ A minimal WearOS (Android Watch) app for keeping score during padel matches.
   - `MainActivity.kt` - App entry point
   - `PadelScoreApp.kt` - Main UI (Jetpack Compose)
   - `PadelGameViewModel.kt` - Game logic and scoring rules
+- `app/src/test/java/com/example/padelscorewear/`
+  - `PadelGameViewModelTest.kt` - Unit tests for scoring logic
+
+## Running Tests
+
+```bash
+./gradlew test
+```
+
+Or in Android Studio: right-click on test file → Run
 
 ## Notes
 
