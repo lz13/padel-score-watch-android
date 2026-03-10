@@ -73,14 +73,14 @@ fun PadelScoreApp(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
+                .padding(top = 16.dp, bottom = 16.dp, start = 12.dp, end = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(4.dp)
+            verticalArrangement = Arrangement.SpaceEvenly
         ) {
         matchWinner?.let { winner ->
             Text(
                 text = "Team $winner Wins!",
-                fontSize = 14.sp,
+                fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF4CAF50)
             )
@@ -89,19 +89,19 @@ fun PadelScoreApp(
         if (isMatchStarted) {
             Text(
                 text = viewModel.timeDisplay,
-                fontSize = 10.sp,
+                fontSize = 9.sp,
                 color = Color.Gray
             )
         } else {
             Button(
                 onClick = { viewModel.startMatch() },
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .height(24.dp)
+                    .fillMaxWidth(0.65f)
+                    .height(22.dp)
             ) {
                 Text(
                     text = "Start Match",
-                    fontSize = 10.sp
+                    fontSize = 9.sp
                 )
             }
         }
@@ -169,37 +169,35 @@ fun PadelScoreApp(
             isTiebreak -> {
                 Text(
                     text = "TIEBREAK",
-                    fontSize = 10.sp,
+                    fontSize = 9.sp,
                     color = Color(0xFF9C27B0)
                 )
             }
             isDeuce -> {
                 Text(
                     text = "DEUCE",
-                    fontSize = 10.sp,
+                    fontSize = 9.sp,
                     color = Color(0xFFFFEB3B)
                 )
             }
             advantage != null -> {
                 Text(
                     text = "ADV Team $advantage",
-                    fontSize = 10.sp,
+                    fontSize = 9.sp,
                     color = Color(0xFFFFEB3B)
                 )
             }
         }
         
-        Spacer(modifier = Modifier.height(4.dp))
-        
         Button(
             onClick = { showResetDialog = true },
             modifier = Modifier
-                .fillMaxWidth()
-                .height(28.dp)
+                .fillMaxWidth(0.6f)
+                .height(24.dp)
         ) {
             Text(
                 text = "Reset",
-                fontSize = 11.sp
+                fontSize = 9.sp
             )
         }
         }
@@ -230,12 +228,12 @@ fun ScoreDisplay(
     ) {
         Text(
             text = label,
-            fontSize = 8.sp,
+            fontSize = 7.sp,
             color = Color.Gray
         )
         Text(
             text = score,
-            fontSize = 12.sp,
+            fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold
         )
     }
@@ -257,7 +255,7 @@ fun TeamScoreButton(
             .clip(RoundedCornerShape(8.dp))
             .background(backgroundColor)
             .clickable { onTap() }
-            .padding(vertical = 12.dp)
+            .padding(vertical = 8.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -281,7 +279,7 @@ fun TeamScoreButton(
             }
             Text(
                 text = score,
-                fontSize = 20.sp,
+                fontSize = 18.sp,
                 fontWeight = FontWeight.Bold
             )
         }
