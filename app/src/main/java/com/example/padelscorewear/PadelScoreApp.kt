@@ -300,38 +300,36 @@ fun ResetConfirmationDialog(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.85f)
+                .fillMaxWidth(0.75f)
                 .background(Color(0xFF1C1C1C), RoundedCornerShape(12.dp))
-                .padding(20.dp),
+                .padding(14.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
                 text = "Reset Game?",
-                fontSize = 18.sp,
+                fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             
             Text(
-                text = "This will reset all scores. Are you sure?",
-                fontSize = 13.sp,
+                text = "Reset all scores?",
+                fontSize = 11.sp,
                 color = Color.White.copy(alpha = 0.8f)
             )
             
-            Spacer(modifier = Modifier.height(8.dp))
-            
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Button(
                     onClick = onDismiss,
                     modifier = Modifier
                         .weight(1f)
-                        .height(40.dp)
+                        .height(32.dp)
                 ) {
-                    Text("Cancel", fontSize = 13.sp)
+                    Text("Cancel", fontSize = 11.sp)
                 }
                 
                 Button(
@@ -340,9 +338,9 @@ fun ResetConfirmationDialog(
                     },
                     modifier = Modifier
                         .weight(1f)
-                        .height(40.dp)
+                        .height(32.dp)
                 ) {
-                    Text("Reset", fontSize = 13.sp)
+                    Text("Reset", fontSize = 11.sp)
                 }
             }
         }
