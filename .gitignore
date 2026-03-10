@@ -1,0 +1,29 @@
+# WatchOS (Apple) - keep for reference but don't track
+PadelScoreWatch/
+PadelScoreWatch.xcodeproj/
+PadelScoreWatchTests/
+*.xcodeproj
+*.xcworkspace
+
+# Android
+*.iml
+.gradle
+/local.properties
+/.idea/
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android build outputs
+app/build/
+app/.cxx/
+
+# Keystore files
+*.jks
+*.keystore
+
+# Log files
+*.log
