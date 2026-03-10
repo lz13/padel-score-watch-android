@@ -69,25 +69,14 @@ fun PadelScoreApp(
         }
     }
     
-    if (showResetDialog) {
-        ResetConfirmationDialog(
-            onConfirm = {
-                viewModel.reset()
-                showResetDialog = false
-            },
-            onDismiss = {
-                showResetDialog = false
-            }
-        )
-    }
-    
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(4.dp)
+        ) {
         matchWinner?.let { winner ->
             Text(
                 text = "Team $winner Wins!",
@@ -131,9 +120,17 @@ fun PadelScoreApp(
                 .padding(horizontal = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
+            val score1 by remember(team1Score, team2Score, isDeuce, advantage, isTiebreak) {
+                derivedStateOf { viewModel.scoreDisplay(1) }
+            }
+            
+            val score2 by remember(team1Score, team2Score, isDeuce, advantage, isTiebreak) {
+                derivedStateOf { viewModel.scoreDisplay(2) }
+            }
+            
             TeamScoreButton(
                 teamName = "Team 1",
-                score = viewModel.scoreDisplay(1),
+                score = score1,
                 isServing = viewModel.currentServer == 1,
                 backgroundColor = Color(0xFF2196F3).copy(alpha = 0.3f),
                 onTap = {
@@ -151,7 +148,7 @@ fun PadelScoreApp(
             
             TeamScoreButton(
                 teamName = "Team 2",
-                score = viewModel.scoreDisplay(2),
+                score = score2,
                 isServing = viewModel.currentServer == 2,
                 backgroundColor = Color(0xFFFF9800).copy(alpha = 0.3f),
                 onTap = {
@@ -205,6 +202,19 @@ fun PadelScoreApp(
                 fontSize = 11.sp
             )
         }
+        }
+        
+        if (showResetDialog) {
+            ResetConfirmationDialog(
+                onConfirm = {
+                    viewModel.reset()
+                    showResetDialog = false
+                },
+                onDismiss = {
+                    showResetDialog = false
+                }
+            )
+        }
     }
 }
 
@@ -246,12 +256,7 @@ fun TeamScoreButton(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .background(backgroundColor)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = { onTap() },
-                    onLongPress = { onLongPress() }
-                )
-            }
+            .clickable { onTap() }
             .padding(vertical = 12.dp)
     ) {
         Column(
@@ -291,47 +296,55 @@ fun ResetConfirmationDialog(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colors.background),
+            .background(Color(0xFF000000).copy(alpha = 0.9f))
+            .clickable(enabled = false) { },
         contentAlignment = Alignment.Center
     ) {
-        Box(
+        Column(
             modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .wrapContentHeight()
-                .background(MaterialTheme.colors.surface, RoundedCornerShape(8.dp))
-                .padding(16.dp)
+                .fillMaxWidth(0.85f)
+                .background(Color(0xFF1C1C1C), RoundedCornerShape(12.dp))
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.spacedBy(12.dp)
+            Text(
+                text = "Reset Game?",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            
+            Text(
+                text = "This will reset all scores. Are you sure?",
+                fontSize = 13.sp,
+                color = Color.White.copy(alpha = 0.8f)
+            )
+            
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(
-                    text = "Reset Game?",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                
-                Text(
-                    text = "This will reset all scores.",
-                    fontSize = 12.sp
-                )
-                
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(40.dp)
                 ) {
-                    Button(
-                        onClick = onDismiss,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Cancel", fontSize = 12.sp)
-                    }
-                    
-                    Button(
-                        onClick = onConfirm,
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        Text("Reset", fontSize = 12.sp)
-                    }
+                    Text("Cancel", fontSize = 13.sp)
+                }
+                
+                Button(
+                    onClick = {
+                        onConfirm()
+                    },
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(40.dp)
+                ) {
+                    Text("Reset", fontSize = 13.sp)
                 }
             }
         }

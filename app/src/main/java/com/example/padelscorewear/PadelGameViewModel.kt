@@ -223,16 +223,16 @@ class PadelGameViewModel : ViewModel() {
     }
     
     fun scoreDisplay(team: Int): String {
-        val score = if (team == 1) _team1Score.value else _team2Score.value
+        val score = if (team == 1) team1Score.value else team2Score.value
         
-        if (_isTiebreak.value) {
+        if (isTiebreak.value) {
             return score.toString()
         }
         
-        if (_team1Score.value >= 3 && _team2Score.value >= 3) {
-            if (_isDeuce.value) {
+        if (team1Score.value >= 3 && team2Score.value >= 3) {
+            if (isDeuce.value) {
                 return "40"
-            } else if (_advantage.value == team) {
+            } else if (advantage.value == team) {
                 return "AD"
             } else {
                 return "40"
